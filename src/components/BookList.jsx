@@ -1,7 +1,7 @@
 import { useState } from "react";
 import BookEdit from "./BookEdit";
 
-const BookList = ({ book, onDelete }) => {
+const BookList = ({ book, onDelete, onEdit }) => {
   const [showBookEdit, setShowBookEdit] = useState(false);
 
   const handleEditClick = () => {
@@ -12,13 +12,19 @@ const BookList = ({ book, onDelete }) => {
     onDelete(book.id);
   };
 
+  const handleSubmit = (id, newTitle) => {
+    setShowBookEdit(false);
+    onEdit(id, newTitle);
+  };
+
   let content = <h3>{book.title}</h3>;
   if (showBookEdit) {
-    content = <BookEdit book={book} />;
+    content = <BookEdit book={book} onSubmit={handleSubmit} />;
   }
 
   return (
     <div className="book-show">
+      <img src={`https://picsum.photos/seed/${book.id}/300/200`} alt="books" />
       {content}
       <div className="actions">
         <button className="edit" onClick={handleEditClick}>

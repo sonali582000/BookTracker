@@ -5,6 +5,17 @@ import BookShow from "./components/BookShow";
 function App() {
   const [book, setBook] = useState([]);
 
+  const handleBookUpdateId = (id, newTitle) => {
+    const BookEdit = book.map((book) => {
+      if (book.id === id) {
+        return { ...book, title: newTitle };
+      }
+      return book;
+    });
+
+    setBook(BookEdit);
+  };
+
   const handleBookDeleteId = (id) => {
     const BookToBeDelete = book.filter((book) => {
       return book.id !== id;
@@ -23,7 +34,12 @@ function App() {
   return (
     <>
       <div className="app">
-        <BookShow books={book} onDelete={handleBookDeleteId} />
+        <h1>Reading List</h1>
+        <BookShow
+          books={book}
+          onDelete={handleBookDeleteId}
+          onEdit={handleBookUpdateId}
+        />
         <BookCreate onCreate={handleCreateBook} />
       </div>
     </>
